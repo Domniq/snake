@@ -4,11 +4,12 @@
     {
         Console.WindowHeight = 16;
         Console.WindowWidth = 32;
+
         int screenWidth = Console.WindowWidth;
         int screenHeight = Console.WindowHeight;
         Random random = new Random();
         string movement = "RIGHT";
-        List<int> telje = new List<int>();
+
         int score = 0;
         Pixel pixel = new Pixel();
 
@@ -16,11 +17,10 @@
         pixel.yPos = screenHeight / 2;
         pixel.screenColor = ConsoleColor.Red;
 
-        List<int> teljePositie = new List<int>();
-        teljePositie.Add(pixel.xPos);
-        teljePositie.Add(pixel.yPos);
-
-        DateTime tijd = DateTime.Now;
+        List<int> snakeHeadPosition = new List<int>();
+        List<int> snakeTail = new List<int>();
+        snakeHeadPosition.Add(pixel.xPos);
+        snakeHeadPosition.Add(pixel.yPos);
 
         string obstacle = "*";
 
@@ -72,10 +72,10 @@
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("H");
 
-            for (int i = 0; i < telje.Count(); i++)
+            for (int i = 0; i < snakeTail.Count(); i++)
 
             {
-                Console.SetCursorPosition(telje[i], telje[i + 1]);
+                Console.SetCursorPosition(snakeTail[i], snakeTail[i + 1]);
                 Console.Write("■");
             }
 
@@ -125,8 +125,7 @@
             if (movement == "RIGHT")
                 pixel.xPos++;
 
-            //Hindernis treffen
-
+            //Generowanie jedzenia
             if (pixel.xPos == obstacleXpos && pixel.yPos /* ?? */ == obstacleYpos)
             {
                 score++;
@@ -134,13 +133,12 @@
                 obstacleYpos = random.Next(1, screenHeight);
             }
 
-            teljePositie.Insert(0, pixel.xPos);
-            teljePositie.Insert(1, pixel.yPos);
-            teljePositie.RemoveAt(teljePositie.Count - 1);
-            teljePositie.RemoveAt(teljePositie.Count - 1);
+            snakeHeadPosition.Insert(0, pixel.xPos);
+            snakeHeadPosition.Insert(1, pixel.yPos);
+            snakeHeadPosition.RemoveAt(snakeHeadPosition.Count - 1);
+            snakeHeadPosition.RemoveAt(snakeHeadPosition.Count - 1);
 
-            //Kollision mit Wände oder mit sich selbst
-
+            //Kolizja z ścianą lub samym sobą
             if (pixel.xPos == 0 || pixel.xPos == screenWidth - 1 || pixel.yPos == 0 || pixel.yPos == screenHeight - 1)
             {
                 Console.Clear();
@@ -148,15 +146,15 @@
                 Console.SetCursorPosition(screenWidth / 5, screenHeight / 2);
                 Console.WriteLine("Game Over");
                 Console.SetCursorPosition(screenWidth / 5, screenHeight / 2 + 1);
-                Console.WriteLine("Dein Score ist: " + score);
+                Console.WriteLine("Your score is: " + score);
                 Console.SetCursorPosition(screenWidth / 5, screenHeight / 2 + 2);
 
                 Environment.Exit(0);
             }
 
-            for (int i = 0; i < telje.Count(); i += 2)
+            for (int i = 0; i < snakeTail.Count(); i += 2)
             {
-                if (pixel.xPos == telje[i] && pixel.yPos == telje[i + 1])
+                if (pixel.xPos == snakeTail[i] && pixel.yPos == snakeTail[i + 1])
                 {
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -165,7 +163,7 @@
                     //???
 
                     Console.SetCursorPosition(screenWidth / 5, screenHeight / 2 + 1);
-                    Console.WriteLine("Dein Score ist: " + score);
+                    Console.WriteLine("Your score is: " + score);
                     Console.SetCursorPosition(screenWidth / 5, screenHeight / 2 + 2);
 
                     Environment.Exit(0);
