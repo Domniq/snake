@@ -2,11 +2,8 @@
 {
     static void Main()
     {
-        Console.WindowHeight = 16;
-        Console.WindowWidth = 32;
-
-        int screenWidth = Console.WindowWidth;
-        int screenHeight = Console.WindowHeight;
+        int screenWidth = 16;
+        int screenHeight = 32;
         Random random = new Random();
         string movement = "RIGHT";
 
@@ -32,7 +29,6 @@
             Console.Clear();
 
             //Draw Obstacle
-
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.SetCursorPosition(obstacleXpos, obstacleYpos);
             Console.Write(obstacle);
@@ -43,49 +39,50 @@
 
             Console.ForegroundColor = ConsoleColor.White;
 
+            // Generowanie ściany górnej
             for (int i = 0; i < screenWidth; i++)
             {
                 Console.SetCursorPosition(i, 0);
                 Console.Write("■");
             }
 
+            // Generowanie ściany dolnej
             for (int i = 0; i < screenWidth; i++)
             {
                 Console.SetCursorPosition(i, screenHeight - 1);
                 Console.Write("■");
             }
 
+            // Generowanie ściany lewej
             for (int i = 0; i < screenHeight; i++)
             {
                 Console.SetCursorPosition(0, i);
                 Console.Write("■");
             }
 
+            // Generowanie ściany prawej
             for (int i = 0; i < screenHeight; i++)
             {
                 Console.SetCursorPosition(screenWidth - 1, i);
                 Console.Write("■");
             }
 
-            Console.ForegroundColor =  ConsoleColor.Green/* ?? */;
+            Console.ForegroundColor =  ConsoleColor.Green;
             Console.WriteLine("Score: " + score);
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("H");
 
             for (int i = 0; i < snakeTail.Count(); i++)
-
             {
                 Console.SetCursorPosition(snakeTail[i], snakeTail[i + 1]);
                 Console.Write("■");
             }
 
             //Draw Snake
-
-            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
+            Console.SetCursorPosition(pixel.xPos - 3, pixel.yPos);
             Console.Write("■");
-            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
+            Console.SetCursorPosition(pixel.xPos - 2, pixel.yPos);
             Console.Write("■");
-            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
+            Console.SetCursorPosition(pixel.xPos - 1, pixel.yPos);
             Console.Write("■");
             Console.SetCursorPosition(pixel.xPos, pixel.yPos);
             Console.Write("■");
@@ -93,7 +90,6 @@
             ConsoleKeyInfo info = Console.ReadKey();
 
             //Game Logic
-
             switch (info.Key)
             {
                 case ConsoleKey.UpArrow:
@@ -126,7 +122,7 @@
                 pixel.xPos++;
 
             //Generowanie jedzenia
-            if (pixel.xPos == obstacleXpos && pixel.yPos /* ?? */ == obstacleYpos)
+            if (pixel.xPos == obstacleXpos && pixel.yPos == obstacleYpos)
             {
                 score++;
                 obstacleXpos = random.Next(1, screenWidth);
@@ -169,6 +165,7 @@
                     Environment.Exit(0);
                 }
             }
+
             Thread.Sleep(50);
         }
     }
