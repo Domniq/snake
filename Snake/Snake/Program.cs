@@ -28,6 +28,9 @@
         int obstacleXpos = random.Next(1, screenWidth);
         int obstacleYpos = random.Next(1, screenHeight);
 
+        Console.WriteLine("Press enter to start");
+        Console.ReadKey();
+
         while (true)
         {
             Console.Clear();
@@ -91,26 +94,30 @@
             Console.SetCursorPosition(pixel.xPos, pixel.yPos);
             Console.Write("■");
 
-            ConsoleKeyInfo info = Console.ReadKey();
 
             //Game Logic
-            switch (info.Key)
+            if (Console.KeyAvailable)
             {
-                case ConsoleKey.UpArrow:
-                    movement = "UP";
-                    break;
+                ConsoleKeyInfo info = Console.ReadKey(true);
 
-                case ConsoleKey.DownArrow:
-                    movement = "DOWN";
-                    break;
+                switch (info.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        movement = "UP";
+                        break;
 
-                case ConsoleKey.LeftArrow:
-                    movement = "LEFT";
-                    break;
+                    case ConsoleKey.DownArrow:
+                        movement = "DOWN";
+                        break;
 
-                case ConsoleKey.RightArrow:
-                    movement = "RIGHT";
-                    break;
+                    case ConsoleKey.LeftArrow:
+                        movement = "LEFT";
+                        break;
+
+                    case ConsoleKey.RightArrow:
+                        movement = "RIGHT";
+                        break;
+                }
             }
 
             if (movement == "UP")
@@ -170,7 +177,7 @@
                 }
             }
 
-            Thread.Sleep(50);
+            Thread.Sleep(100);
         }
     }
 }
