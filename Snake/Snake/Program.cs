@@ -2,8 +2,12 @@
 {
     static void Main()
     {
-        int screenWidth = 16;
-        int screenHeight = 32;
+        Console.SetWindowSize(1, 1);
+        Console.WindowHeight = 16;
+        Console.WindowWidth = 32;
+
+        int screenWidth = Console.WindowWidth;
+        int screenHeight = Console.WindowHeight;
         Random random = new Random();
         string movement = "RIGHT";
 
